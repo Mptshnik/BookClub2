@@ -1,0 +1,40 @@
+﻿<Page x:Class="BookClub.Views.Pages.AddEditProduct"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookClub.Views.Pages"
+      mc:Ignorable="d" 
+      Title="AddEditProduct">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <Label Content="Наименование"/>
+            <TextBox x:Name="tbName"/>
+            <Label Content="Описание"/>
+            <TextBox TextWrapping="WrapWithOverflow" Height="100" x:Name="tbDescription"/>
+            <Label Content="Цена"/>
+            <TextBox x:Name="tbPrice"/>
+            <Label Content="Скидка"/>
+            <TextBox x:Name="tbDiscount"/>
+            <Label Content="Количество на складе"/>
+            <TextBox x:Name="tbQuantity"/>
+            <Label Content="Категория"/>
+            <ComboBox
+                    DisplayMemberPath="Name"
+                    Name="cbCategories" SelectionChanged="cbCategories_SelectionChanged">
+            </ComboBox>
+            <Button Style="{StaticResource btnAddImage}" 
+                    Margin="0 10 0 0" Name="btmAddImage" Click="btmAddImage_Click"
+                    Content="Выбрать фото"></Button>
+            <StackPanel Margin="0 15 0 0" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btnSave" Click="btnSave_Click" Margin="10" Content="Сохранить"/>
+                <Button x:Name="btnCancel" Click="btnCancel_Click" Margin="10" Content="Отмена"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -1,0 +1,30 @@
+﻿<Window x:Class="BookClub.Views.Windows.AuthorizationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookClub.Views.Windows"
+        mc:Ignorable="d"
+        Title="Книжный клуб"
+        MinHeight="700"
+        MinWidth="1200">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="1">
+            <StackPanel VerticalAlignment="Center">
+                <Label Content="Логин"/>
+                <TextBox x:Name="tbLogin"/>
+                <Label Content="Пароль"/>
+                <PasswordBox x:Name="tbPassword"/>
+                <StackPanel Margin="0 15 0 0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="btnLogin" Click="btnLogin_Click" Margin="10" Content="Войти"/>
+                    <Button x:Name="btnExit" Click="btnExit_Click" Margin="10" Content="Выход"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
