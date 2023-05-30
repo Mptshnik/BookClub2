@@ -19,6 +19,17 @@
     <NavigationProperty Name="PickupPoints" Relationship="Self.FK_Orders_PickupPoints" FromRole="Orders" ToRole="PickupPoints" />
     <NavigationProperty Name="OrdersProducts" Relationship="Self.FK_OrdersProducts_Orders" FromRole="Orders" ToRole="OrdersProducts" />
   </EntityType>
+  <EntityType Name="OrdersProducts">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_OrdersProducts_Orders" FromRole="OrdersProducts" ToRole="Orders" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_OrdersProducts_Products" FromRole="OrdersProducts" ToRole="Products" />
+  </EntityType>
   <EntityType Name="PickupPoints">
     <Key>
       <PropertyRef Name="ID" />
@@ -38,6 +49,7 @@
     <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="CategoryID" Type="Int32" Nullable="false" />
     <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
     <NavigationProperty Name="Categories" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
     <NavigationProperty Name="OrdersProducts" Relationship="Self.FK_OrdersProducts_Products" FromRole="Products" ToRole="OrdersProducts" />
   </EntityType>
@@ -61,18 +73,6 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="RoleID" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Roles" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
-  </EntityType>
-  <EntityType Name="OrdersProducts">
-    <Key>
-      <PropertyRef Name="OrderID" />
-      <PropertyRef Name="ProductID" />
-      <PropertyRef Name="Quantity" />
-    </Key>
-    <Property Name="OrderID" Type="Int32" Nullable="false" />
-    <Property Name="ProductID" Type="Int32" Nullable="false" />
-    <Property Name="Quantity" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Orders" Relationship="Self.FK_OrdersProducts_Orders" FromRole="OrdersProducts" ToRole="Orders" />
-    <NavigationProperty Name="Products" Relationship="Self.FK_OrdersProducts_Products" FromRole="OrdersProducts" ToRole="Products" />
   </EntityType>
   <Association Name="FK_Products_Categories">
     <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
@@ -137,11 +137,11 @@
   <EntityContainer Name="DatabaseContext" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Categories" EntityType="Self.Categories" />
     <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="OrdersProducts" EntityType="Self.OrdersProducts" />
     <EntitySet Name="PickupPoints" EntityType="Self.PickupPoints" />
     <EntitySet Name="Products" EntityType="Self.Products" />
     <EntitySet Name="Roles" EntityType="Self.Roles" />
     <EntitySet Name="Users" EntityType="Self.Users" />
-    <EntitySet Name="OrdersProducts" EntityType="Self.OrdersProducts" />
     <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />

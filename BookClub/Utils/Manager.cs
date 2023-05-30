@@ -10,5 +10,6 @@ namespace BookClub.Utils
     public class Manager
     {
         public static Frame MainFrame { get; set; }
+        public static Button OrderButton { get; set; }
     }
 }

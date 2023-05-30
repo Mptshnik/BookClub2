@@ -3,6 +3,7 @@ using BookClub.Utils;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -23,12 +24,41 @@ namespace BookClub.Views.Pages
     {
         private string fileName = null;
         private string fromPath;
+        private int editID;
+        private string editImageName;
+        private List<TextBox> inputs= new List<TextBox>();
 
         public AddEditProduct()
         {
             InitializeComponent();
 
+            if (Storage.GetInstance().Data.ContainsKey("EditProduct"))
+            {
+                LoadProductInfo();
+            }
+
             cbCategories.ItemsSource = DatabaseContext.GetInstance().Categories.ToList();
+            cbCategories.SelectedIndex = 0;
+
+            inputs.Add(tbName);
+            inputs.Add(tbDescription);
+            inputs.Add(tbDiscount);
+            inputs.Add(tbPrice);
+            inputs.Add(tbQuantity);
+        }
+
+        private void LoadProductInfo()
+        {
+            Products product = Storage.GetInstance().Data["EditProduct"] as Products;
+
+            editID= product.ID;
+            tbName.Text = product.Name;
+            tbDescription.Text = product.Description;
+            tbDiscount.Text = product.Discount.ToString();
+            tbPrice.Text = product.Price.ToString();
+            tbQuantity.Text = product.Quantity.ToString();
+            cbCategories.SelectedItem = product.Categories;
+            editImageName = product.Image;
         }
 
         private void cbCategories_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -38,34 +68,78 @@ namespace BookClub.Views.Pages
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (!Storage.GetInstance().Data.TryGetValue("EditProduct", out dynamic value))
+            foreach (TextBox textBox in inputs)
             {
-                var product = new Products()
+                if (string.IsNullOrEmpty(textBox.Text.Trim()))
                 {
-                    Name = tbName.Text.Trim(),
-                    Price = Convert.ToDecimal(tbPrice.Text.Trim()),
-                    Description = tbDescription.Text.Trim(),
-                    CategoryID = (cbCategories.SelectedItem as Categories).ID,
-                    Discount = Convert.ToDecimal(tbDiscount.Text.Trim()),
-                    Image = fileName,
-                    //Тут еще должен быть Quantity, но его нет
-                };
+                    MessageBox.Show("Заполните все поля");
 
-                if (fileName != null)
-                {
-                    string projectPath = Directory.GetCurrentDirectory().Replace("\\bin\\Debug", "").Replace("\\bin\\Release", "");
-                    string toPath = $"{projectPath}\\Src\\Images\\{DateTime.Now.ToFileTime()}{fileName}";
-                    
-                    try 
-                    { 
-                        File.Copy(fromPath, toPath); 
-                    } 
-                    catch(Exception ex) 
-                    { 
-                        MessageBox.Show(ex.Message); 
-                    }
+                    return;
                 }
+            }
 
+            decimal price = 0;
+            if (!decimal.TryParse(tbPrice.Text, out price))
+            {
+                MessageBox.Show("Цена должна представлять собой десятичное число");
+                return;
+            }
+
+            decimal discount = 0;
+            if (!decimal.TryParse(tbDiscount.Text, out discount))
+            {
+                MessageBox.Show("Скидка должна представлять собой десятичное число");
+                return;
+            }
+
+            if (discount > 1 || discount < 0)
+            {
+                MessageBox.Show("Скидка должна находиться в диапазоне от 0 до 1");
+                return;
+            }
+
+            int quantity = 0;
+            if (!int.TryParse(tbQuantity.Text, out quantity))
+            {
+                MessageBox.Show("Количество должно быть целым числом");
+                return;
+            }
+
+            if (quantity <= 0)
+            {
+                MessageBox.Show("Минимальное значение количества товара 1");
+                return;
+            }
+
+            var product = new Products()
+            {
+                Name = tbName.Text.Trim(),
+                Price = price,
+                Description = tbDescription.Text.Trim(),
+                CategoryID = (cbCategories.SelectedItem as Categories).ID,
+                Discount = discount,
+                Image = fileName,
+                Quantity= quantity,
+            };
+
+
+            if (fileName != null)
+            {
+                string projectPath = Directory.GetCurrentDirectory().Replace("\\bin\\Debug", "").Replace("\\bin\\Release", "");
+                string toPath = $"{projectPath}\\Src\\Images\\{DateTime.Now.ToFileTime()}{fileName}";
+
+                try
+                {
+                    File.Copy(fromPath, toPath);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+
+            if (!Storage.GetInstance().Data.ContainsKey("EditProduct"))
+            {          
                 try
                 {
                     DatabaseContext.GetInstance().Products.Add(product);
@@ -82,7 +156,26 @@ namespace BookClub.Views.Pages
             }
             else
             {
+                product.ID = editID;
+                if(fileName == null)
+                {
+                    product.Image = editImageName;
+                }
 
+                try
+                {
+                    DatabaseContext.GetInstance().Products.AddOrUpdate(product);
+                    DatabaseContext.GetInstance().SaveChanges();
+
+                    MessageBox.Show("Запись успешно изменена");
+                    Storage.GetInstance().Data.Remove("EditProduct");
+
+                    Manager.MainFrame.Navigate(new ItemsPage());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }              
             }
         }
 
@@ -90,6 +183,8 @@ namespace BookClub.Views.Pages
         {
             if (Manager.MainFrame.CanGoBack)
             {
+                Storage.GetInstance().Data.Remove("EditProduct");
+
                 Manager.MainFrame.GoBack();
             }
         }

@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Книжный клуб"
         MinHeight="700"
-        MinWidth="1200">
+        MinWidth="1200"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

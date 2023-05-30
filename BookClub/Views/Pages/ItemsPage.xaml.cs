@@ -2,6 +2,7 @@
 using BookClub.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,66 @@ namespace BookClub.Views.Pages
 
         private void miAddToOrder_Click(object sender, RoutedEventArgs e)
         {
+            Products product = lvProducts.SelectedItem as Products;
+
+            if (product == null)
+            {
+                MessageBox.Show("Выберите товар");
+
+                return;
+            }
+
+            Orders currentOrder = new Orders();
+            if(Storage.GetInstance().Data.TryGetValue("CurrentOrder", out dynamic value))
+            {
+                currentOrder = value as Orders;
+
+                Products productExistsInOrder = currentOrder.OrdersProducts.Select(x => x.Products)
+                    .Where(x => x.ID == product.ID).FirstOrDefault();
+
+
+                OrdersProducts ordersProducts = new OrdersProducts();
+                if (productExistsInOrder == null)
+                {
+                    ordersProducts.Products = product;
+                    ordersProducts.Orders = currentOrder;
+                    ordersProducts.Quantity = 1;
+
+                    DatabaseContext.GetInstance().OrdersProducts.Add(ordersProducts);
+                }
+                else
+                {
+                    ordersProducts = currentOrder.OrdersProducts.ToList().Where(x => x.ProductID == product.ID)
+                        .FirstOrDefault();
+
+                    ordersProducts.Quantity++;
+
+                    DatabaseContext.GetInstance().OrdersProducts.AddOrUpdate(ordersProducts);
+                }
+                         
+                DatabaseContext.GetInstance().SaveChanges();
+            }
+            else
+            {
+                Manager.OrderButton.Visibility = Visibility.Visible;
+
+                currentOrder.OrderDate = DateTime.Now;
+                currentOrder.Code = new Random().Next(100, 999);
+                currentOrder.PickupPoints = DatabaseContext.GetInstance().PickupPoints.ToList().FirstOrDefault();
+
+                OrdersProducts ordersProducts = new OrdersProducts();
+                ordersProducts.Products = product;
+                ordersProducts.Orders = currentOrder;
+                ordersProducts.Quantity = 1;
+
+                currentOrder.OrdersProducts.Add(ordersProducts);
+
+                DatabaseContext.GetInstance().Orders.Add(currentOrder);
+                DatabaseContext.GetInstance().SaveChanges();
+
+
+                Storage.GetInstance().Data.Add("CurrentOrder", currentOrder);
+            }
 
         }
 
@@ -101,12 +162,54 @@ namespace BookClub.Views.Pages
 
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
+            Products product = lvProducts.SelectedItem as Products;
 
+            if (product == null)
+            {
+                MessageBox.Show("Выберите товар");
+
+                return;
+            }
+
+            Storage.GetInstance().Data.Add("EditProduct", product);
+
+            Manager.MainFrame.Navigate(new AddEditProduct());
         }
 
         private void btnAddProduct_Click(object sender, RoutedEventArgs e)
         {
             Manager.MainFrame.Navigate(new AddEditProduct());
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            Products product = lvProducts.SelectedItem as Products;
+
+            if (product == null)
+            {
+                MessageBox.Show("Выберите товар");
+
+                return;
+            }
+
+            try
+            {
+                if (MessageBox.Show("Удалить запись?", "Удаление записи", 
+                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
+                    DatabaseContext.GetInstance().Products.Remove(product);
+                    DatabaseContext.GetInstance().SaveChanges();
+
+                    MessageBox.Show("Запись успешно удалена");
+
+                    lvProducts.ItemsSource = DatabaseContext.GetInstance().Products.ToList();
+                }                     
+            }
+            catch
+            (Exception ex)
+            { 
+                MessageBox.Show(ex.Message);
+            }        
         }
     }
 }

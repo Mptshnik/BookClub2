@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\User\source\repos\BookClub\BookClub\App.xaml
-4415209545
+51092129038
 2694247955
-201047129755
+21-1661297690
 18-48747179
-Views\Pages\AddEditProduct.xaml;Views\Pages\ItemsPage.xaml;Views\Windows\MainWindow.xaml;Views\Windows\AuthorizationWindow.xaml;
+Views\Pages\AddEditProduct.xaml;Views\Pages\ItemsPage.xaml;Views\Windows\MainWindow.xaml;Views\Windows\AuthorizationWindow.xaml;Views\Windows\OrderWindow.xaml;
 
 False
 

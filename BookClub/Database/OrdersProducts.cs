@@ -17,6 +17,7 @@ namespace BookClub.Database
         public int OrderID { get; set; }
         public int ProductID { get; set; }
         public int Quantity { get; set; }
+        public int ID { get; set; }
     
         public virtual Orders Orders { get; set; }
         public virtual Products Products { get; set; }

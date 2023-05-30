@@ -12,6 +12,7 @@ namespace BookClub.Database
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     public partial class Products
     {
@@ -27,36 +28,71 @@ namespace BookClub.Database
         public decimal Price { get; set; }
         public string Image { get; set; }
         public int CategoryID { get; set; }
-        public int Quantity { get { return new Random().Next(10, 100); } set { } }
         public decimal Discount { get; set; }
+        public Nullable<int> Quantity { get; set; }
+
         [NotMapped]
-        public decimal PriceWithDiscount 
-        { 
-            get 
+        public decimal PriceForQuantutyWithDiscount
+        {
+            get
             {
-                return Math.Round(Price - Price * Discount, 2);
-            } 
-            set { } 
+                OrdersProducts ordersProducts = OrdersProducts.ToList().Where(x => x.ProductID == ID).FirstOrDefault();
+
+                return ordersProducts.Quantity * PriceWithDiscount;
+            }
+            set { }
+        }
+
+        [NotMapped]
+        public decimal PriceForQuantuty
+        {
+            get
+            {
+                OrdersProducts ordersProducts = OrdersProducts.ToList().Where(x => x.ProductID == ID).FirstOrDefault();
+
+                return ordersProducts.Quantity * Price;
+            }
+            set { }
+        }
+
+        [NotMapped]
+        public int QuantityInOrder
+        {
+            get
+            {
+                OrdersProducts ordersProducts = OrdersProducts.ToList().Where(x => x.ProductID == ID).FirstOrDefault();
+
+                return ordersProducts.Quantity;
+            }
+            set { }
         }
         [NotMapped]
-        public string PathToImage 
-        { 
-            get 
+        public decimal PriceWithDiscount
+        {
+            get
+            {
+                return Math.Round(Price - Price * Discount, 2);
+            }
+            set { }
+        }
+        [NotMapped]
+        public string PathToImage
+        {
+            get
             {
                 string path = "/Src/Images/";
 
-                if(string.IsNullOrEmpty(Image)) 
+                if (string.IsNullOrEmpty(Image))
                 {
                     return path + "book.png";
-                } 
+                }
                 else
                 {
                     return path + Image;
                 }
-            } 
-            set { } 
+            }
+            set { }
         }
-    
         public virtual Categories Categories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrdersProducts> OrdersProducts { get; set; }

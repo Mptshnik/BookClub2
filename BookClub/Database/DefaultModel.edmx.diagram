@@ -4,14 +4,14 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ef2228d53f18449a9c4c64e4146e2124" Name="Diagram1">
-        <EntityTypeShape EntityType="BookStoreModel.Categories" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.Orders" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.PickupPoints" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.Products" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+      <Diagram DiagramId="0497c99f3b384fe6b9353263d9126db2" Name="Diagram1">
+        <EntityTypeShape EntityType="BookStoreModel.Categories" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.Orders" Width="1.5" PointX="3" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.OrdersProducts" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.PickupPoints" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="BookStoreModel.Products" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreModel.Roles" Width="1.5" PointX="5.75" PointY="5.375" IsExpanded="true" />
         <EntityTypeShape EntityType="BookStoreModel.Users" Width="1.5" PointX="8" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="BookStoreModel.OrdersProducts" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
         <AssociationConnector Association="BookStoreModel.FK_Products_Categories" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreModel.FK_Orders_PickupPoints" ManuallyRouted="false" />
         <AssociationConnector Association="BookStoreModel.FK_OrdersProducts_Orders" ManuallyRouted="false" />

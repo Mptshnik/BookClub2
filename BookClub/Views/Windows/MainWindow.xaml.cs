@@ -24,6 +24,7 @@ namespace BookClub.Views.Windows
             InitializeComponent();
 
             Manager.MainFrame = FrameContent;
+            Manager.OrderButton = btnOrder;
 
             Users user = Storage.GetInstance().Data["CurrentUser"] as Users;
             tbUsername.Text = $"{user.LastName} {user.FirstName} {user.MiddleName}";
@@ -42,7 +43,12 @@ namespace BookClub.Views.Windows
 
         private void btnOrder_Click(object sender, RoutedEventArgs e)
         {
+            OrderWindow orderWindow = new OrderWindow();
 
+            if(orderWindow.ShowDialog() == true)
+            {
+                orderWindow.Close();
+            }
         }
     }
 }

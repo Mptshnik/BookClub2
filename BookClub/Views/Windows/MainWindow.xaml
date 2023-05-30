@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Книжный клуб" 
         MinHeight="700"
-        MinWidth="1200">
+        MinWidth="1200"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -22,7 +23,7 @@
                    Margin="10" Source="/Src/Images/logo.png" />
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock VerticalAlignment="Center" x:Name="tbUsername" Text="Иванов Иван Иванович"/>
-                <Button Content="Заказ" Margin="10" Name="btnOrder" Click="btnOrder_Click"/>
+                <Button Content="Заказ" Margin="10" Visibility="Collapsed" Name="btnOrder" Click="btnOrder_Click"/>
                 <Button Content="Выход" Margin="10" Name="btnLogout" Click="btnLogout_Click"/>
             </StackPanel>
         </Grid>

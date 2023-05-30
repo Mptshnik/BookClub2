@@ -57,19 +57,23 @@
                             <ColumnDefinition Width="90"/>
                             <ColumnDefinition Width="500"/>
                             <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="300"/>
                         </Grid.ColumnDefinitions>
                         <Image Margin="15" Grid.Column="0" Source="{Binding PathToImage}"/>
                         <StackPanel Orientation="Vertical" Grid.Column="1">
                             <TextBlock Text="{Binding Name}"/>
-                            <TextBlock Text="{Binding Description}"/>
+                            <TextBlock TextWrapping="WrapWithOverflow" Text="{Binding Description}"/>
+                            <TextBlock Text="{Binding Categories.Name}"/>
                             <TextBlock Text="{Binding StringFormat={}{0} рублей, Path=PriceWithDiscount}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="2" Orientation="Vertical">
                             <Label Content="В наличии:"/>
                             <TextBlock Text="{Binding Quantity}"/>
                         </StackPanel>
-                        <Button Grid.Column="3" Click="EditButton_Click" Content="Изменить"/>
+                        <StackPanel Orientation="Horizontal" Grid.Column="3">
+                            <Button Click="EditButton_Click" Content="Изменить"/>
+                            <Button Margin="15 0 0 0" Click="DeleteButton_Click" Background="Red" Content="Удалить"/>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

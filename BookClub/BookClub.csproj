@@ -64,33 +64,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Utils\Manager.cs" />
-    <Compile Include="Utils\Storage.cs" />
-    <Compile Include="Views\Pages\AddEditProduct.xaml.cs">
-      <DependentUpon>AddEditProduct.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\ItemsPage.xaml.cs">
-      <DependentUpon>ItemsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Windows\AuthorizationWindow.xaml.cs">
-      <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\Pages\AddEditProduct.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Pages\ItemsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Windows\MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Database\Categories.cs">
       <DependentUpon>DefaultModel.tt</DependentUpon>
     </Compile>
@@ -127,11 +100,45 @@
     <Compile Include="Database\Users.cs">
       <DependentUpon>DefaultModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Manager.cs" />
+    <Compile Include="Utils\Storage.cs" />
+    <Compile Include="Views\Pages\AddEditProduct.xaml.cs">
+      <DependentUpon>AddEditProduct.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Pages\ItemsPage.xaml.cs">
+      <DependentUpon>ItemsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\AuthorizationWindow.xaml.cs">
+      <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\OrderWindow.xaml.cs">
+      <DependentUpon>OrderWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\Pages\AddEditProduct.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Pages\ItemsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Windows\AuthorizationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\OrderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,6 +181,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Src\Images\image1.jpg" />
+    <Resource Include="Src\Images\image2.jpg" />
+    <Resource Include="Src\Images\image3.jpg" />
+    <Resource Include="Src\Images\image4.jpg" />
+    <Resource Include="Src\Images\book.png" />
+    <Resource Include="Src\Images\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Database\DefaultModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DefaultModel.edmx</DependentUpon>
@@ -184,13 +199,6 @@
       <DependentUpon>DefaultModel.edmx</DependentUpon>
       <LastGenOutput>DefaultModel.cs</LastGenOutput>
     </Content>
-    <Resource Include="Src\Images\image1.jpg" />
-    <Resource Include="Src\Images\image2.jpg" />
-    <Resource Include="Src\Images\image3.jpg" />
-    <Resource Include="Src\Images\image4.jpg" />
-    <Resource Include="Src\Images\book.png" />
-    <Resource Include="Src\Images\logo.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

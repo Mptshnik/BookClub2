@@ -28,3 +28,5 @@ C:\Users\User\source\repos\BookClub\BookClub\obj\Debug\Views\Pages\ItemsPage.g.c
 C:\Users\User\source\repos\BookClub\BookClub\obj\Debug\Views\Pages\ItemsPage.baml
 C:\Users\User\source\repos\BookClub\BookClub\obj\Debug\Views\Pages\AddEditProduct.g.cs
 C:\Users\User\source\repos\BookClub\BookClub\obj\Debug\Views\Pages\AddEditProduct.baml
+C:\Users\User\source\repos\BookClub\BookClub\obj\Debug\Views\Windows\OrderWindow.g.cs
+C:\Users\User\source\repos\BookClub\BookClub\obj\Debug\Views\Windows\OrderWindow.baml

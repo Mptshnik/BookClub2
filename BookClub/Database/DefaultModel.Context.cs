@@ -16,7 +16,6 @@ namespace BookClub.Database
     public partial class DatabaseContext : DbContext
     {
         private static DatabaseContext instance;
-
         public DatabaseContext()
             : base("name=DatabaseContext")
         {
@@ -27,22 +26,22 @@ namespace BookClub.Database
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Categories> Categories { get; set; }
-        public virtual DbSet<Orders> Orders { get; set; }
-        public virtual DbSet<PickupPoints> PickupPoints { get; set; }
-        public virtual DbSet<Products> Products { get; set; }
-        public virtual DbSet<Roles> Roles { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<OrdersProducts> OrdersProducts { get; set; }
-
         public static DatabaseContext GetInstance()
         {
-            if (instance == null)
+            if(instance == null)
             {
-                instance= new DatabaseContext();
+                instance = new DatabaseContext();
             }
 
             return instance;
         }
+
+        public virtual DbSet<Categories> Categories { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
+        public virtual DbSet<OrdersProducts> OrdersProducts { get; set; }
+        public virtual DbSet<PickupPoints> PickupPoints { get; set; }
+        public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
     }
 }
